@@ -1,0 +1,158 @@
+[
+  {
+    "id": "ramuh",
+    "name": "Ramuh",
+    "world": "wob",
+    "spells": { "thunder": 5, "thundara": 2, "poison": 3 }
+  },
+  {
+    "id": "kirin",
+    "name": "Kirin",
+    "world": "wob",
+    "spells": { "cure": 4, "cura": 2, "regen": 3, "poisona": 5, "libra": 5 }
+  },
+  {
+    "id": "siren",
+    "name": "Siren",
+    "world": "wob",
+    "spells": { "sleep": 10, "silence": 8, "slow": 6, "fire": 4 }
+  },
+  {
+    "id": "cait_sith",
+    "name": "Cait Sith",
+    "world": "wob",
+    "spells": { "confuse": 7, "imp": 5, "float": 2 }
+  },
+  {
+    "id": "ifrit",
+    "name": "Ifrit",
+    "world": "wob",
+    "spells": { "fire": 10, "fira": 5, "drain": 2 }
+  },
+  {
+    "id": "shiva",
+    "name": "Shiva",
+    "world": "wob",
+    "spells": { "blizzard": 10, "blizzara": 5, "rasp": 3, "osmose": 3, "cure": 3 }
+  },
+  {
+    "id": "unicorn",
+    "name": "Unicorn",
+    "world": "wob",
+    "spells": { "cura": 4, "esuna": 3, "dispel": 2, "protect": 2, "shell": 2 }
+  },
+  {
+    "id": "maduin",
+    "name": "Maduin",
+    "world": "wob",
+    "spells": { "fira": 4, "blizzara": 4, "thundara": 4 }
+  },
+  {
+    "id": "catoblepas",
+    "name": "Catoblepas",
+    "world": "wob",
+    "spells": { "bio": 2, "break": 3, "death": 1 }
+  },
+  {
+    "id": "phantom",
+    "name": "Phantom",
+    "world": "wob",
+    "spells": { "berserk": 8, "vanish": 6, "gravity": 4 }
+  },
+  {
+    "id": "carbuncle",
+    "name": "Carbuncle",
+    "world": "wob",
+    "spells": { "reflect": 5, "haste": 3, "shell": 2, "protect": 2, "teleport": 5 }
+  },
+  {
+    "id": "bismarck",
+    "name": "Bismarck",
+    "world": "wob",
+    "spells": { "fire": 4, "blizzard": 4, "thunder": 4, "raise": 3 }
+  },
+  {
+    "id": "golem",
+    "name": "Golem",
+    "world": "wob",
+    "spells": { "protect": 5, "stop": 4, "cura": 2, "silence": 4 }
+  },
+  {
+    "id": "zona_seeker",
+    "name": "Zona Seeker",
+    "world": "wob",
+    "spells": { "rasp": 4, "osmose": 5, "shell": 4 }
+  },
+  {
+    "id": "seraph",
+    "name": "Seraph",
+    "world": "wob",
+    "spells": { "raise": 4, "cure": 6, "cura": 3, "regen": 3, "esuna": 2 }
+  },
+  {
+    "id": "palidor",
+    "name": "Palidor",
+    "world": "wor",
+    "spells": { "haste": 3, "slow": 3, "hastega": 2, "slowga": 2, "float": 2 }
+  },
+  {
+    "id": "tritoch",
+    "name": "Tritoch",
+    "world": "wob",
+    "spells": { "firaga": 4, "blizzaga": 4, "thundaga": 4 }
+  },
+  {
+    "id": "fenrir",
+    "name": "Fenrir",
+    "world": "wor",
+    "spells": { "teleport": 5, "banish": 5, "stop": 3 }
+  },
+  {
+    "id": "lakshmi",
+    "name": "Lakshmi",
+    "world": "wor",
+    "spells": { "cure": 4, "cura": 3, "curaga": 2, "regen": 2, "esuna": 2 }
+  },
+  {
+    "id": "alexander",
+    "name": "Alexander",
+    "world": "wor",
+    "spells": { "holy": 3, "shell": 4, "protect": 4, "dispel": 2 }
+  },
+  {
+    "id": "phoenix",
+    "name": "Phoenix",
+    "world": "wor",
+    "spells": { "raise": 8, "arise": 3, "reraise": 2, "curaga": 4, "firaga": 2 }
+  },
+  {
+    "id": "odin",
+    "name": "Odin",
+    "world": "wor",
+    "spells": { "meteor": 1 }
+  },
+  {
+    "id": "raiden",
+    "name": "Raiden",
+    "world": "wor",
+    "spells": { "quick": 1 }
+  },
+  {
+    "id": "bahamut",
+    "name": "Bahamut",
+    "world": "wor",
+    "spells": { "flare": 2 }
+  },
+  {
+    "id": "crusader",
+    "name": "Crusader",
+    "world": "wor",
+    "spells": { "meltdown": 1, "meteor": 10 }
+  },
+  {
+    "id": "ragnarok",
+    "name": "Ragnarok",
+    "world": "wor",
+    "spells": { "ultima": 1 }
+  }
+]
