@@ -1,0 +1,16 @@
+[
+  { "id": "terra",   "name": "Terra",   "can_equip_espers": true  },
+  { "id": "locke",   "name": "Locke",   "can_equip_espers": true  },
+  { "id": "celes",   "name": "Celes",   "can_equip_espers": true  },
+  { "id": "edgar",   "name": "Edgar",   "can_equip_espers": true  },
+  { "id": "sabin",   "name": "Sabin",   "can_equip_espers": true  },
+  { "id": "cyan",    "name": "Cyan",    "can_equip_espers": true  },
+  { "id": "gau",     "name": "Gau",     "can_equip_espers": true  },
+  { "id": "shadow",  "name": "Shadow",  "can_equip_espers": true  },
+  { "id": "setzer",  "name": "Setzer",  "can_equip_espers": true  },
+  { "id": "strago",  "name": "Strago",  "can_equip_espers": true  },
+  { "id": "relm",    "name": "Relm",    "can_equip_espers": true  },
+  { "id": "mog",     "name": "Mog",     "can_equip_espers": true  },
+  { "id": "gogo",    "name": "Gogo",    "can_equip_espers": false },
+  { "id": "umaro",   "name": "Umaro",   "can_equip_espers": false }
+]
