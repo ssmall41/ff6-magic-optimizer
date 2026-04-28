@@ -65,16 +65,16 @@ def test_two_chars_shared_esper():
 def test_two_chars_different_espers_parallel():
     """
     Terra needs Fire (Ifrit x10): 10 AP.
-    Locke needs Thunder (Ramuh x5): 20 AP.
-    No shared esper → they work in parallel. Min T = max(10, 20) = 20 AP.
+    Locke needs Thundara (Ramuh x2): 50 AP.
+    No shared esper → they work in parallel. Min T = max(10, 50) = 50 AP.
     """
     party = [
         {"character_id": "terra", "progress": all_learned_except({"fire": 0})},
-        {"character_id": "locke", "progress": all_learned_except({"thunder": 0})},
+        {"character_id": "locke", "progress": all_learned_except({"thundara": 0})},
     ]
     result = run(party, ["ifrit", "ramuh"])
     assert result.status == "optimal"
-    assert result.total_ap == 20
+    assert result.total_ap == 50
 
 
 def test_unlearnable_spell_warned():
@@ -104,3 +104,75 @@ def test_schedule_has_no_esper_conflicts():
         assert len(real) == len(set(real)), (
             f"Esper conflict in phase {phase.phase}: {phase.assignments}"
         )
+
+
+# ── Fractional AP / integer schedule correctness ─────────────
+
+def _phase_ap_per_char_esper(result) -> dict[tuple[str, str | None], int]:
+    """Sum schedule phase APs by (character, esper) pair."""
+    earned: dict[tuple[str, str | None], int] = {}
+    for phase in result.schedule:
+        for char_id, esper_id in phase.assignments.items():
+            key = (char_id, esper_id)
+            earned[key] = earned.get(key, 0) + phase.ap
+    return earned
+
+
+def test_fractional_rate_no_ap_inflation():
+    """
+    Siren teaches Fire at rate 6, so each character needs ceil(100/6) = 17 AP on
+    Siren (not 16.666...).  That fractional LP value previously caused the
+    schedule builder to ceil each phase independently, inflating AP attributed to
+    other espers in those same phases (Kirin showed 102 instead of 100, Ramuh
+    showed 51 instead of 50).
+
+    With the integer-AP schedule, each character earns exactly the minimum AP
+    needed on each esper: 100 on Kirin (Cura rate 1), 50 on Ramuh (Thundara
+    rate 2), 17 on Siren (Fire rate 6).
+    """
+    party = [
+        {"character_id": "celes", "progress": {}},
+        {"character_id": "locke", "progress": {}},
+        {"character_id": "sabin", "progress": {}},
+        {"character_id": "edgar", "progress": {}},
+    ]
+    result = run(party, ["ramuh", "kirin", "siren"])
+    assert result.status == "optimal"
+    assert result.total_ap == 400  # 4 chars × 100 AP on Kirin serially
+
+    earned = _phase_ap_per_char_esper(result)
+    for char_id in ["celes", "locke", "sabin", "edgar"]:
+        assert earned.get((char_id, "kirin"), 0) == 100, f"{char_id} kirin"
+        assert earned.get((char_id, "ramuh"), 0) == 50,  f"{char_id} ramuh"
+        assert earned.get((char_id, "siren"), 0) == 17,  f"{char_id} siren"
+
+
+def test_integer_rate_no_inflation():
+    """
+    When all spell rates divide evenly into 100, there are no fractional LP
+    values, so the old and new schedule builders agree.  This guards against
+    regressions in the simple case.
+
+    Terra needs only Fire (Ifrit x10): exactly 10 AP, no fractions.
+    """
+    party = [{"character_id": "terra", "progress": all_learned_except({"fire": 0})}]
+    result = run(party, ["ifrit"])
+    assert result.status == "optimal"
+    assert result.total_ap == 10
+
+    earned = _phase_ap_per_char_esper(result)
+    assert earned.get(("terra", "ifrit"), 0) == 10
+
+
+def test_fractional_rate_single_char():
+    """
+    Single character needing a fractional-rate spell: ceil(100/6) = 17 AP,
+    not the truncated 16.
+    """
+    party = [{"character_id": "terra", "progress": all_learned_except({"fire": 0})}]
+    result = run(party, ["siren"])  # Fire x6
+    assert result.status == "optimal"
+    assert result.total_ap == 17
+
+    earned = _phase_ap_per_char_esper(result)
+    assert earned.get(("terra", "siren"), 0) == 17

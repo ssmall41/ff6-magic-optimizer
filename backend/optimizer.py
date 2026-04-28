@@ -194,16 +194,29 @@ def optimize(
         )
 
     T_exact = float(result.fun)
-    T_int = math.ceil(T_exact)
     allocations = _extract_allocations(result.x, inp)
 
-    # Build per-character allocation dict for schedule builder
-    alloc_by_char: dict[str, dict[str | None, float]] = {c: {} for c in char_ids}
-    for entry in allocations:
-        alloc_by_char[entry.character_id][entry.esper_id] = entry.ap_amount
+    # Compute integer AP needed per (char, esper) from spell requirements.
+    # ceil(remaining/rate) gives the exact integer AP a character must earn
+    # with an esper to learn every spell it teaches, accounting for partial
+    # progress. This avoids fractional LP values propagating into phase lengths.
+    char_esper_ap: dict[str, dict[str, int]] = {c: {} for c in char_ids}
+    for ci, char_id in enumerate(char_ids):
+        for ei, esper_id in enumerate(valid_esper_ids):
+            if result.x[ci * (M + 1) + ei] <= 1e-4:
+                continue
+            ap_needed = 0
+            for si in range(S):
+                rate = inp.rates[ei, si]
+                rem = inp.remaining[ci, si]
+                if rate > 0 and rem > 0:
+                    ap_needed = max(ap_needed, math.ceil(rem / rate))
+            if ap_needed > 0:
+                char_esper_ap[char_id][esper_id] = ap_needed
 
-    raw_phases = build_schedule(alloc_by_char, T_exact)
+    raw_phases = build_schedule(char_esper_ap)
     schedule = [PhaseAssignment(**p) for p in raw_phases]
+    T_int = raw_phases[-1]["cumulative_ap"] if raw_phases else 0
 
     return OptimizeResponse(
         status="optimal",
