@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32">
+  <!-- FF6-style dark background -->
+  <rect width="16" height="16" rx="2" fill="#1C1C3E"/>
+
+  <!-- Green hair - top arc -->
+  <rect x="5" y="0" width="6" height="1" fill="#55CC44"/>
+  <rect x="4" y="1" width="8" height="1" fill="#55CC44"/>
+  <rect x="3" y="2" width="10" height="1" fill="#55CC44"/>
+  <!-- Hair side pieces row 3 (wide) -->
+  <rect x="3" y="3" width="2" height="1" fill="#55CC44"/>
+  <rect x="11" y="3" width="2" height="1" fill="#55CC44"/>
+  <!-- Hair side pieces rows 4-7 (thin) -->
+  <rect x="4" y="4" width="1" height="4" fill="#55CC44"/>
+  <rect x="11" y="4" width="1" height="4" fill="#55CC44"/>
+
+  <!-- Face/skin - rows 3-4 and 6 and 8 (full width) -->
+  <rect x="5" y="3" width="6" height="2" fill="#FFCC99"/>
+  <rect x="5" y="6" width="6" height="1" fill="#FFCC99"/>
+  <rect x="5" y="8" width="6" height="1" fill="#FFCC99"/>
+  <!-- Face row 5 skin around eyes -->
+  <rect x="5" y="5" width="1" height="1" fill="#FFCC99"/>
+  <rect x="7" y="5" width="2" height="1" fill="#FFCC99"/>
+  <rect x="10" y="5" width="1" height="1" fill="#FFCC99"/>
+  <!-- Eyes -->
+  <rect x="6" y="5" width="1" height="1" fill="#442211"/>
+  <rect x="9" y="5" width="1" height="1" fill="#442211"/>
+  <!-- Face row 7 skin around mouth -->
+  <rect x="5" y="7" width="2" height="1" fill="#FFCC99"/>
+  <rect x="9" y="7" width="2" height="1" fill="#FFCC99"/>
+  <!-- Mouth -->
+  <rect x="7" y="7" width="2" height="1" fill="#EE7777"/>
+
+  <!-- Purple outfit -->
+  <rect x="5" y="9" width="6" height="1" fill="#9944AA"/>
+  <rect x="4" y="10" width="8" height="2" fill="#9944AA"/>
+</svg>
