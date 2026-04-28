@@ -150,14 +150,6 @@ def optimize(
             if remaining[ci, si] > 0 and not np.any(rates[:, si] > 0):
                 if spell_id not in unlearnable:
                     unlearnable.append(spell_id)
-                    warnings.append(OptimizerWarning(
-                        kind="unlearnable",
-                        spell_id=spell_id,
-                        message=(
-                            f"No available esper teaches {spell_id}. "
-                            "Equip an esper that teaches this spell to include it."
-                        ),
-                    ))
                 remaining[ci, si] = 0.0  # exclude from LP
 
     # Short-circuit if nothing left to learn
