@@ -3,19 +3,19 @@
     "id": "ramuh",
     "name": "Ramuh",
     "world": "wob",
-    "spells": { "thunder": 5, "thundara": 2, "poison": 3 }
+    "spells": { "thunder": 10, "thundara": 2, "poison": 5 }
   },
   {
     "id": "kirin",
     "name": "Kirin",
     "world": "wob",
-    "spells": { "cure": 4, "cura": 2, "regen": 3, "poisona": 5, "libra": 5 }
+    "spells": { "cure": 5, "cura": 1, "regen": 3, "poisona": 4, "libra": 5 }
   },
   {
     "id": "siren",
     "name": "Siren",
     "world": "wob",
-    "spells": { "sleep": 10, "silence": 8, "slow": 6, "fire": 4 }
+    "spells": { "sleep": 10, "silence": 8, "slow": 7, "fire": 6 }
   },
   {
     "id": "cait_sith",
@@ -27,103 +27,103 @@
     "id": "ifrit",
     "name": "Ifrit",
     "world": "wob",
-    "spells": { "fire": 10, "fira": 5, "drain": 2 }
+    "spells": { "fire": 10, "fira": 5, "drain": 1 }
   },
   {
     "id": "shiva",
     "name": "Shiva",
     "world": "wob",
-    "spells": { "blizzard": 10, "blizzara": 5, "rasp": 3, "osmose": 3, "cure": 3 }
+    "spells": { "blizzard": 10, "blizzara": 5, "rasp": 4, "osmose": 4, "cure": 3 }
   },
   {
     "id": "unicorn",
     "name": "Unicorn",
     "world": "wob",
-    "spells": { "cura": 4, "esuna": 3, "dispel": 2, "protect": 2, "shell": 2 }
+    "spells": { "cura": 4, "esuna": 3, "dispel": 2, "protect": 1, "shell": 1 }
   },
   {
     "id": "maduin",
     "name": "Maduin",
     "world": "wob",
-    "spells": { "fira": 4, "blizzara": 4, "thundara": 4 }
+    "spells": { "fira": 3, "blizzara": 3, "thundara": 3 }
   },
   {
     "id": "catoblepas",
     "name": "Catoblepas",
     "world": "wob",
-    "spells": { "bio": 2, "break": 3, "death": 1 }
+    "spells": { "bio": 8, "break": 5, "death": 2 }
   },
   {
     "id": "phantom",
     "name": "Phantom",
     "world": "wob",
-    "spells": { "berserk": 8, "vanish": 6, "gravity": 4 }
+    "spells": { "berserk": 3, "vanish": 3, "gravity": 5 }
   },
   {
     "id": "carbuncle",
     "name": "Carbuncle",
     "world": "wob",
-    "spells": { "reflect": 5, "haste": 3, "shell": 2, "protect": 2, "teleport": 5 }
+    "spells": { "reflect": 5, "haste": 3, "shell": 2, "protect": 2, "teleport": 2 }
   },
   {
     "id": "bismarck",
     "name": "Bismarck",
     "world": "wob",
-    "spells": { "fire": 4, "blizzard": 4, "thunder": 4, "raise": 3 }
+    "spells": { "fire": 20, "blizzard": 20, "thunder": 20, "raise": 2 }
   },
   {
     "id": "golem",
     "name": "Golem",
     "world": "wob",
-    "spells": { "protect": 5, "stop": 4, "cura": 2, "silence": 4 }
+    "spells": { "protect": 5, "stop": 5, "cura": 5 }
   },
   {
     "id": "zona_seeker",
     "name": "Zona Seeker",
     "world": "wob",
-    "spells": { "rasp": 4, "osmose": 5, "shell": 4 }
+    "spells": { "rasp": 20, "osmose": 15, "shell": 5 }
   },
   {
     "id": "seraph",
     "name": "Seraph",
     "world": "wob",
-    "spells": { "raise": 4, "cure": 6, "cura": 3, "regen": 3, "esuna": 2 }
+    "spells": { "raise": 5, "cure": 20, "cura": 8, "regen": 10, "esuna": 4 }
   },
   {
     "id": "palidor",
     "name": "Palidor",
     "world": "wor",
-    "spells": { "haste": 3, "slow": 3, "hastega": 2, "slowga": 2, "float": 2 }
+    "spells": { "haste": 20, "slow": 20, "hastega": 2, "slowga": 2, "float": 5 }
   },
   {
     "id": "tritoch",
     "name": "Tritoch",
     "world": "wob",
-    "spells": { "firaga": 4, "blizzaga": 4, "thundaga": 4 }
+    "spells": { "firaga": 1, "blizzaga": 1, "thundaga": 1 }
   },
   {
     "id": "fenrir",
     "name": "Fenrir",
     "world": "wor",
-    "spells": { "teleport": 5, "banish": 5, "stop": 3 }
+    "spells": { "teleport": 10, "banish": 5, "stop": 3 }
   },
   {
     "id": "lakshmi",
     "name": "Lakshmi",
     "world": "wor",
-    "spells": { "cure": 4, "cura": 3, "curaga": 2, "regen": 2, "esuna": 2 }
+    "spells": { "cure": 25, "cura": 16, "curaga": 1, "regen": 20, "esuna": 20 }
   },
   {
     "id": "alexander",
     "name": "Alexander",
     "world": "wor",
-    "spells": { "holy": 3, "shell": 4, "protect": 4, "dispel": 2 }
+    "spells": { "holy": 2, "shell": 10, "protect": 10, "dispel": 10, "esuna": 15 }
   },
   {
     "id": "phoenix",
     "name": "Phoenix",
     "world": "wor",
-    "spells": { "raise": 8, "arise": 3, "reraise": 2, "curaga": 4, "firaga": 2 }
+    "spells": { "raise": 10, "arise": 2, "reraise": 1, "curaga": 2, "firaga": 3 }
   },
   {
     "id": "odin",
