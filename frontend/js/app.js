@@ -127,8 +127,16 @@ function resetCharProgress() {
 // ── AP assignment ────────────────────────────────────────────
 
 function setAssignment(charId, esperId) {
+  if (esperId) {
+    for (const [otherId, otherEsperId] of Object.entries(state.assignments)) {
+      if (otherId !== charId && otherEsperId === esperId) {
+        state.assignments[otherId] = null;
+      }
+    }
+  }
   state.assignments[charId] = esperId;
   saveState(state);
+  renderAPAssignments(gameData, state, setAssignment);
 }
 
 // ── Apply AP ─────────────────────────────────────────────────
