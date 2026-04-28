@@ -205,10 +205,7 @@ function renderResults(result, gameData) {
 
   // Warnings
   const warnBox = document.getElementById('results-warnings');
-  const allWarnings = [
-    ...result.warnings,
-    ...result.unlearnable.map(s => ({ message: `No available esper teaches "${s}" — select an esper that teaches it.` })),
-  ];
+  const allWarnings = [...result.warnings];
   if (allWarnings.length) {
     warnBox.classList.remove('hidden');
     warnBox.innerHTML = '<strong>Warnings</strong><ul>' +
