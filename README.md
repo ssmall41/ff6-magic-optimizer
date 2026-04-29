@@ -82,3 +82,5 @@ The scheduler then runs a greedy loop:
 4. Repeat until all characters have no remaining Esper assignments.
 
 This produces a sequence of phases, each specifying the AP duration and which Esper every character equips.
+
+The scheduler also accepts the player's **current Esper assignments** as seeds. Any character who already has an Esper equipped and still needs AP from it is prioritized in the first phase, claiming that Esper before other characters make their greedy picks. This means the generated schedule respects what characters are already wearing — no unnecessary swaps at the start of play.
