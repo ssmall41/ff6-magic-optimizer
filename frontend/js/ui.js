@@ -40,7 +40,12 @@ function renderEsperGrid(gameData, state, filters, onToggle) {
       .map(([s, r]) => `${s} ×${r}`)
       .join(', ');
 
-    if (state.espers.includes(esper.id)) btn.classList.add('selected');
+    if (esper.id === 'ragnarok' && state.swordChosen) {
+      btn.classList.add('sword-chosen');
+      btn.title += ' (sword chosen — Ragnarok unavailable)';
+    } else if (state.espers.includes(esper.id)) {
+      btn.classList.add('selected');
+    }
     btn.addEventListener('click', () => onToggle(esper.id));
     grid.appendChild(btn);
   }

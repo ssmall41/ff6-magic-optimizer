@@ -9,6 +9,7 @@ const DEFAULT_STATE = {
   assignments: {},    // { char_id: esper_id | null } — current equipped espers
   activeCharTab: null,
   thinkBig: false,
+  swordChosen: false, // player chose sword over Ragnarok esper
 };
 
 function loadState() {

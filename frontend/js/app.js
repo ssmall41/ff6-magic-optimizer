@@ -77,18 +77,33 @@ function toggleCharacter(charId) {
 }
 
 function toggleEsper(esperId) {
-  const idx = state.espers.indexOf(esperId);
-  if (idx >= 0) {
-    state.espers.splice(idx, 1);
-  } else {
-    if (esperId === 'odin') {
-      const ri = state.espers.indexOf('raiden');
-      if (ri >= 0) state.espers.splice(ri, 1);
-    } else if (esperId === 'raiden') {
-      const oi = state.espers.indexOf('odin');
-      if (oi >= 0) state.espers.splice(oi, 1);
+  if (esperId === 'ragnarok') {
+    const isSelected = state.espers.includes('ragnarok');
+    if (state.swordChosen) {
+      // Sword Chosen → Unselected
+      state.swordChosen = false;
+    } else if (isSelected) {
+      // Selected → Sword Chosen
+      state.espers.splice(state.espers.indexOf('ragnarok'), 1);
+      state.swordChosen = true;
+    } else {
+      // Unselected → Selected
+      state.espers.push('ragnarok');
     }
-    state.espers.push(esperId);
+  } else {
+    const idx = state.espers.indexOf(esperId);
+    if (idx >= 0) {
+      state.espers.splice(idx, 1);
+    } else {
+      if (esperId === 'odin') {
+        const ri = state.espers.indexOf('raiden');
+        if (ri >= 0) state.espers.splice(ri, 1);
+      } else if (esperId === 'raiden') {
+        const oi = state.espers.indexOf('odin');
+        if (oi >= 0) state.espers.splice(oi, 1);
+      }
+      state.espers.push(esperId);
+    }
   }
   saveState(state);
   renderEsperGrid(gameData, state, getEsperFilters(), toggleEsper);
@@ -208,7 +223,7 @@ async function handleOptimize() {
     for (const charId of state.party) {
       assignments[charId] = state.assignments[charId] ?? null;
     }
-    const result = await fetchOptimize(party, state.espers, assignments, state.thinkBig);
+    const result = await fetchOptimize(party, state.espers, assignments, state.thinkBig, state.swordChosen);
     renderResults(result, gameData);
   } catch (err) {
     errEl.textContent = `Error: ${err.message}`;

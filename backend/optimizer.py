@@ -117,6 +117,7 @@ def optimize(
     all_spells: list[dict],
     current_assignments: dict[str, str | None] | None = None,
     think_big: bool = False,
+    sword_chosen: bool = False,
 ) -> OptimizeResponse:
     char_ids = [p["character_id"] for p in party]
     s_ids = [s["id"] for s in all_spells]
@@ -125,7 +126,10 @@ def optimize(
 
     esper_map = {e["id"]: e for e in all_espers}
     sched_esper_ids = [eid for eid in available_esper_ids if eid in esper_map]
-    lp_esper_ids = [e for e in esper_map if e != "odin"] if think_big else sched_esper_ids
+    lp_esper_ids = [
+        e for e in esper_map
+        if e != "odin" and not (sword_chosen and e == "ragnarok")
+    ] if think_big else sched_esper_ids
     valid_esper_ids = lp_esper_ids
     M = len(valid_esper_ids)
 

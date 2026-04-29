@@ -15,6 +15,7 @@ class OptimizeRequest(BaseModel):
     available_esper_ids: list[str]
     current_assignments: dict[str, str | None] = Field(default_factory=dict)
     think_big: bool = False
+    sword_chosen: bool = False
 
 
 class PhaseAssignment(BaseModel):
