@@ -14,6 +14,7 @@ class OptimizeRequest(BaseModel):
     party: list[CharacterProgress]
     available_esper_ids: list[str]
     current_assignments: dict[str, str | None] = Field(default_factory=dict)
+    think_big: bool = False
 
 
 class PhaseAssignment(BaseModel):
@@ -38,9 +39,10 @@ class OptimizerWarning(BaseModel):
 
 
 class OptimizeResponse(BaseModel):
-    status: str  # "optimal" | "all_learned" | "infeasible" | "error"
+    status: str  # "optimal" | "all_learned" | "infeasible" | "partial" | "error"
     total_ap: int
     total_ap_exact: float
+    total_ap_all_espers: int | None = None  # set in Think Big mode: integer AP with all espers
     schedule: list[PhaseAssignment]
     allocations: list[AllocationEntry]
     warnings: list[OptimizerWarning]

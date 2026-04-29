@@ -39,7 +39,7 @@ def run_optimize(req: OptimizeRequest):
     if not party_dicts:
         raise HTTPException(status_code=422, detail="Party must have at least one character.")
 
-    if not req.available_esper_ids:
+    if not req.available_esper_ids and not req.think_big:
         raise HTTPException(status_code=422, detail="No espers selected.")
 
     return optimize(
@@ -48,6 +48,7 @@ def run_optimize(req: OptimizeRequest):
         all_espers=espers,
         all_spells=spells,
         current_assignments=req.current_assignments,
+        think_big=req.think_big,
     )
 
 

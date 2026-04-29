@@ -116,6 +116,7 @@ def optimize(
     all_espers: list[dict],
     all_spells: list[dict],
     current_assignments: dict[str, str | None] | None = None,
+    think_big: bool = False,
 ) -> OptimizeResponse:
     char_ids = [p["character_id"] for p in party]
     s_ids = [s["id"] for s in all_spells]
@@ -123,7 +124,9 @@ def optimize(
     S = len(s_ids)
 
     esper_map = {e["id"]: e for e in all_espers}
-    valid_esper_ids = [eid for eid in available_esper_ids if eid in esper_map]
+    sched_esper_ids = [eid for eid in available_esper_ids if eid in esper_map]
+    lp_esper_ids = list(esper_map.keys()) if think_big else sched_esper_ids
+    valid_esper_ids = lp_esper_ids
     M = len(valid_esper_ids)
 
     # Build rates matrix (M × S)
@@ -225,12 +228,24 @@ def optimize(
             if ap_needed > 0:
                 char_esper_ap[char_id][esper_id] = ap_needed
 
+    T_int_all_espers: int | None = None
+    if think_big:
+        all_phases = build_schedule(char_esper_ap, seed_assignments=current_assignments)
+        T_int_all_espers = all_phases[-1]["cumulative_ap"] if all_phases else 0
+        avail_set = set(sched_esper_ids)
+        char_esper_ap = {
+            cid: {eid: ap for eid, ap in esper_aps.items() if eid in avail_set}
+            for cid, esper_aps in char_esper_ap.items()
+        }
+
     raw_phases = build_schedule(char_esper_ap, seed_assignments=current_assignments)
     schedule = [PhaseAssignment(**p) for p in raw_phases]
     T_int = raw_phases[-1]["cumulative_ap"] if raw_phases else 0
 
+    is_partial = think_big and set(sched_esper_ids) < set(lp_esper_ids)
     return OptimizeResponse(
-        status="optimal",
+        status="partial" if is_partial else "optimal",
+        total_ap_all_espers=T_int_all_espers,
         total_ap=T_int,
         total_ap_exact=round(T_exact, 4),
         schedule=schedule,
