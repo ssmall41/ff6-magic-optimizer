@@ -178,6 +178,42 @@ def test_fractional_rate_single_char():
     assert earned.get(("terra", "siren"), 0) == 17
 
 
+# ── Seed assignments ─────────────────────────────────────────
+
+def test_seed_locke_second():
+    """
+    Celes is listed first in the party, but check that we can give Locke any
+    esper to seed.
+    """
+    party = [
+        {"character_id": "celes", "progress": {}},
+        {"character_id": "locke", "progress": {}},
+    ]
+    result = optimize(
+        party=party,
+        available_esper_ids=["ramuh", "kirin", "siren", "cait_sith"],
+        all_espers=load_espers(),
+        all_spells=load_spells(),
+        current_assignments={"locke": "ramuh"},
+    )
+    assert result.status == "optimal"
+    assert result.schedule[0].assignments["locke"] == "ramuh"
+
+    party = [
+        {"character_id": "celes", "progress": {}},
+        {"character_id": "locke", "progress": {}},
+    ]
+    result = optimize(
+        party=party,
+        available_esper_ids=["ramuh", "kirin", "siren", "cait_sith"],
+        all_espers=load_espers(),
+        all_spells=load_spells(),
+        current_assignments={"locke": "kirin"},
+    )
+    assert result.status == "optimal"
+    assert result.schedule[0].assignments["locke"] == "kirin"
+
+
 def test_single_char_all_espers_no_progress():
     """
     Celes with all espers and no progress. The integer conversion must use

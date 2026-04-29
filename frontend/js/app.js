@@ -191,7 +191,11 @@ async function handleOptimize() {
 
   try {
     const party = buildPartyPayload(state.party, state.progress);
-    const result = await fetchOptimize(party, state.espers);
+    const assignments = {};
+    for (const charId of state.party) {
+      assignments[charId] = state.assignments[charId] ?? null;
+    }
+    const result = await fetchOptimize(party, state.espers, assignments);
     renderResults(result, gameData);
   } catch (err) {
     errEl.textContent = `Error: ${err.message}`;

@@ -13,6 +13,7 @@ class CharacterProgress(BaseModel):
 class OptimizeRequest(BaseModel):
     party: list[CharacterProgress]
     available_esper_ids: list[str]
+    current_assignments: dict[str, str | None] = Field(default_factory=dict)
 
 
 class PhaseAssignment(BaseModel):

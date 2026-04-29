@@ -47,6 +47,7 @@ def run_optimize(req: OptimizeRequest):
         available_esper_ids=req.available_esper_ids,
         all_espers=espers,
         all_spells=spells,
+        current_assignments=req.current_assignments,
     )
 
 

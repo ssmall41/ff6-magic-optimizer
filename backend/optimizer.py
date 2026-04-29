@@ -115,6 +115,7 @@ def optimize(
     available_esper_ids: list[str],
     all_espers: list[dict],
     all_spells: list[dict],
+    current_assignments: dict[str, str | None] | None = None,
 ) -> OptimizeResponse:
     char_ids = [p["character_id"] for p in party]
     s_ids = [s["id"] for s in all_spells]
@@ -224,7 +225,7 @@ def optimize(
             if ap_needed > 0:
                 char_esper_ap[char_id][esper_id] = ap_needed
 
-    raw_phases = build_schedule(char_esper_ap)
+    raw_phases = build_schedule(char_esper_ap, seed_assignments=current_assignments)
     schedule = [PhaseAssignment(**p) for p in raw_phases]
     T_int = raw_phases[-1]["cumulative_ap"] if raw_phases else 0
 
