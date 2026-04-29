@@ -125,7 +125,7 @@ def optimize(
 
     esper_map = {e["id"]: e for e in all_espers}
     sched_esper_ids = [eid for eid in available_esper_ids if eid in esper_map]
-    lp_esper_ids = list(esper_map.keys()) if think_big else sched_esper_ids
+    lp_esper_ids = [e for e in esper_map if e != "odin"] if think_big else sched_esper_ids
     valid_esper_ids = lp_esper_ids
     M = len(valid_esper_ids)
 
@@ -242,7 +242,7 @@ def optimize(
     schedule = [PhaseAssignment(**p) for p in raw_phases]
     T_int = raw_phases[-1]["cumulative_ap"] if raw_phases else 0
 
-    is_partial = think_big and set(sched_esper_ids) < set(lp_esper_ids)
+    is_partial = think_big and bool(set(lp_esper_ids) - set(sched_esper_ids))
     return OptimizeResponse(
         status="partial" if is_partial else "optimal",
         total_ap_all_espers=T_int_all_espers,
