@@ -32,6 +32,26 @@ To run the test suite:
 pytest
 ```
 
+## Features
+
+### Think Big
+
+The **Think Big** option changes how the LP optimization is seeded. Normally the LP considers only the Espers you have marked as available. With Think Big enabled, the LP is solved over *all* Espers in the game, giving the theoretically minimum AP if you eventually collect everything. The concrete schedule is still built from only your currently available Espers, so the output shows two numbers: the LP-optimal AP assuming full collection, and the realistic schedule AP using what you actually have. The result status is shown as `partial` when Think Big is on and you are missing at least one Esper.
+
+### Odin / Raiden
+
+In FF6, the Odin Esper transforms into Raiden after a late-game event — you can only ever have one or the other. The optimizer enforces this: selecting Odin automatically deselects Raiden, and vice versa. Think Big mode also excludes Odin from its full-roster LP (only Raiden is considered), reflecting the fact that Odin is never available once Raiden exists.
+
+### Ragnarok: Esper vs. Sword
+
+When the player obtains Ragnarok, they must choose between receiving it as an **Esper** (which teaches Ultima) or as a **Sword** (a powerful weapon). This choice is permanent within a playthrough. The Ragnarok button in the UI cycles through three states:
+
+- **Unselected** — Ragnarok has not been obtained yet.
+- **Selected** — Ragnarok was taken as an Esper and is available for magic learning.
+- **Sword Chosen** — Ragnarok was taken as a sword; the Esper is permanently unavailable.
+
+When Sword Chosen is active, Ragnarok is excluded from both the available-Esper schedule and the Think Big LP optimization.
+
 ## Algorithms
 
 ### LP Optimization
@@ -62,3 +82,5 @@ The scheduler then runs a greedy loop:
 4. Repeat until all characters have no remaining Esper assignments.
 
 This produces a sequence of phases, each specifying the AP duration and which Esper every character equips.
+
+The scheduler also accepts the player's **current Esper assignments** as seeds. Any character who already has an Esper equipped and still needs AP from it is prioritized in the first phase, claiming that Esper before other characters make their greedy picks. This means the generated schedule respects what characters are already wearing — no unnecessary swaps at the start of play.
