@@ -214,6 +214,35 @@ def test_seed_locke_second():
     assert result.schedule[0].assignments["locke"] == "kirin"
 
 
+def test_think_big_all_espers_ap_matches_normal_run():
+    """
+    Think Big mode: total_ap_all_espers must equal the total_ap you'd get by
+    running a normal (non-Think-Big) optimize with all espers selected.
+
+    Party: Celes + Locke, no prior progress.
+    Available espers: Ramuh, Kirin, Siren, Cait Sith (a strict subset).
+    """
+    party = [
+        {"character_id": "celes", "progress": {}},
+        {"character_id": "locke", "progress": {}},
+    ]
+    all_esper_ids = [e["id"] for e in load_espers()]
+
+    normal_all = optimize(party, all_esper_ids, load_espers(), load_spells())
+    think_big = optimize(
+        party,
+        available_esper_ids=["ramuh", "kirin", "siren", "cait_sith"],
+        all_espers=load_espers(),
+        all_spells=load_spells(),
+        think_big=True,
+    )
+
+    assert think_big.status == "partial"
+    assert think_big.total_ap_all_espers is not None
+    assert think_big.total_ap_all_espers == normal_all.total_ap
+    assert think_big.total_ap < think_big.total_ap_all_espers
+
+
 def test_single_char_all_espers_no_progress():
     """
     Celes with all espers and no progress. The integer conversion must use

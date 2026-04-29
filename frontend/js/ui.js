@@ -189,6 +189,21 @@ function renderResults(result, gameData) {
   const summary = document.getElementById('results-summary');
   if (result.status === 'all_learned') {
     summary.innerHTML = '<span class="stat"><span class="stat-value" style="color:var(--learned)">All spells already learned!</span></span>';
+  } else if (result.status === 'partial') {
+    summary.innerHTML = `
+      <span class="stat">
+        <span class="stat-label">Status:</span>
+        <span class="stat-value">Partial (Think Big)</span>
+      </span>
+      <span class="stat">
+        <span class="stat-label">Schedule AP (available espers):</span>
+        <span class="stat-value">${result.total_ap}</span>
+      </span>
+      <span class="stat">
+        <span class="stat-label">LP optimal (all espers):</span>
+        <span class="stat-value">${result.total_ap_all_espers}</span>
+      </span>
+    `;
   } else {
     summary.innerHTML = `
       <span class="stat">

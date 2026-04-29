@@ -32,6 +32,7 @@ function renderAll() {
   renderProgressTabs(state, selectCharTab);
   renderProgressTable(gameData, state, setProgress);
   renderAPAssignments(gameData, state, setAssignment);
+  document.getElementById('think-big').checked = state.thinkBig;
 }
 
 // ── Event binding ────────────────────────────────────────────
@@ -42,6 +43,11 @@ function bindEvents() {
   });
   document.getElementById('filter-wor').addEventListener('change', () => {
     renderEsperGrid(gameData, state, getEsperFilters(), toggleEsper);
+  });
+
+  document.getElementById('think-big').addEventListener('change', e => {
+    state.thinkBig = e.target.checked;
+    saveState(state);
   });
 
   document.getElementById('btn-mark-all').addEventListener('click', markAllLearned);
@@ -180,7 +186,7 @@ async function handleOptimize() {
     errEl.classList.remove('hidden');
     return;
   }
-  if (state.espers.length === 0) {
+  if (state.espers.length === 0 && !state.thinkBig) {
     errEl.textContent = 'Select at least one esper.';
     errEl.classList.remove('hidden');
     return;
@@ -195,7 +201,7 @@ async function handleOptimize() {
     for (const charId of state.party) {
       assignments[charId] = state.assignments[charId] ?? null;
     }
-    const result = await fetchOptimize(party, state.espers, assignments);
+    const result = await fetchOptimize(party, state.espers, assignments, state.thinkBig);
     renderResults(result, gameData);
   } catch (err) {
     errEl.textContent = `Error: ${err.message}`;

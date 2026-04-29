@@ -8,6 +8,7 @@ const DEFAULT_STATE = {
   progress: {},       // { char_id: { spell_id: 0-100 } }
   assignments: {},    // { char_id: esper_id | null } — current equipped espers
   activeCharTab: null,
+  thinkBig: false,
 };
 
 function loadState() {

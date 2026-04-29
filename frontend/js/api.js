@@ -8,11 +8,11 @@ async function fetchGameData() {
   return res.json();
 }
 
-async function fetchOptimize(party, availableEsperIds, currentAssignments) {
+async function fetchOptimize(party, availableEsperIds, currentAssignments, thinkBig = false) {
   const res = await fetch(`${BASE}/api/optimize`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ party, available_esper_ids: availableEsperIds, current_assignments: currentAssignments }),
+    body: JSON.stringify({ party, available_esper_ids: availableEsperIds, current_assignments: currentAssignments, think_big: thinkBig }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }));
