@@ -3,6 +3,7 @@ from __future__ import annotations
 
 def build_schedule(
     char_esper_ap: dict[str, dict[str, int]],
+    seed_assignments: dict[str, str | None] | None = None,
 ) -> list[dict]:
     """
     Convert integer AP requirements to a phased schedule with no esper conflicts.
@@ -24,6 +25,9 @@ def build_schedule(
 
     def pick(char_id: str, in_use: set) -> str | None:
         """Best available (non-conflicted) esper for char; None = idle."""
+        seed = (seed_assignments or {}).get(char_id)
+        if seed and seed not in in_use and pending[char_id].get(seed, 0) > 0:
+            return seed
         real = [
             (ap, e) for e, ap in pending[char_id].items()
             if e not in in_use and ap > 0
