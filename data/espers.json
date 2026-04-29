@@ -120,6 +120,12 @@
     "spells": { "holy": 2, "shell": 10, "protect": 10, "dispel": 10, "esuna": 15 }
   },
   {
+    "id": "midgardsornmr",
+    "name": "Midgardsormr",
+    "world": "wor",
+    "spells": { "quake": 3, "graviga": 1, "tornado": 1}
+  },
+  {
     "id": "phoenix",
     "name": "Phoenix",
     "world": "wor",

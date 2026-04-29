@@ -176,3 +176,63 @@ def test_fractional_rate_single_char():
 
     earned = _phase_ap_per_char_esper(result)
     assert earned.get(("terra", "siren"), 0) == 17
+
+
+def test_single_char_all_espers_no_progress():
+    """
+    Celes with all espers and no progress. The integer conversion must use
+    LP-aware net remaining so that spells covered by other espers don't inflate
+    the AP assigned to a given esper.
+
+    Key cases that differ from naive ceil(100/rate):
+    - siren: 13, not 17  (fire/slow covered by ifrit/palidor)
+    - bismarck: 1, not 50 (raise covered by phoenix; blizzard split with shiva)
+    - shiva: 8, not 20    (blizzard split with bismarck; blizzara split with maduin)
+    """
+    all_esper_ids = [e["id"] for e in load_espers()]
+    party = [{"character_id": "celes", "progress": {}}]
+    result = run(party, all_esper_ids)
+    assert result.status == "optimal"
+
+    earned: dict[str, int] = {}
+    for phase in result.schedule:
+        for char_id, esper_id in phase.assignments.items():
+            if esper_id is not None:
+                earned[esper_id] = earned.get(esper_id, 0) + phase.ap
+
+    expected = {
+        "alexander":    50,
+        "bahamut":      50,
+        "bismarck":      1,
+        "cait_sith":    20,
+        "carbuncle":    20,
+        "catoblepas":   50,
+        "crusader":    100,
+        "fenrir":       20,
+        "golem":         8,
+        "ifrit":       100,
+        "kirin":        25,
+        "lakshmi":       3,
+        "maduin":       20,
+        "midgardsornmr": 100,
+        "phantom":      34,
+        "phoenix":     100,
+        "palidor":      50,
+        "ragnarok":    100,
+        "raiden":      100,
+        "ramuh":        20,
+        "shiva":         8,
+        "siren":        13,
+        "tritoch":     100,
+        "zona_seeker":   5,
+    }
+    absent = {"seraph", "unicorn", "odin"}
+
+    for esper_id, ap in expected.items():
+        assert earned.get(esper_id, 0) == ap, (
+            f"{esper_id}: expected {ap} AP, got {earned.get(esper_id, 0)}"
+        )
+    for esper_id in absent:
+        assert esper_id not in earned, (
+            f"{esper_id}: expected 0 AP but got {earned.get(esper_id)} AP"
+        )

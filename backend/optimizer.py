@@ -209,8 +209,18 @@ def optimize(
             for si in range(S):
                 rate = inp.rates[ei, si]
                 rem = inp.remaining[ci, si]
-                if rate > 0 and rem > 0:
-                    ap_needed = max(ap_needed, math.ceil(rem / rate))
+                if rate <= 0 or rem <= 0:
+                    continue
+                # Subtract coverage already provided by other espers in the LP
+                # solution, so we don't inflate AP for spells covered elsewhere.
+                other_coverage = sum(
+                    inp.rates[ej, si] * result.x[ci * (M + 1) + ej]
+                    for ej in range(M)
+                    if ej != ei and inp.rates[ej, si] > 0
+                )
+                net_rem = max(0.0, rem - other_coverage)
+                if net_rem > 0:
+                    ap_needed = max(ap_needed, math.ceil(net_rem / rate - 1e-9))
             if ap_needed > 0:
                 char_esper_ap[char_id][esper_id] = ap_needed
 
