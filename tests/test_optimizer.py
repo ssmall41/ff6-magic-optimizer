@@ -301,3 +301,63 @@ def test_single_char_all_espers_no_progress():
         assert esper_id not in earned, (
             f"{esper_id}: expected 0 AP but got {earned.get(esper_id)} AP"
         )
+
+
+# ── Sword chosen (Ragnarok excluded) ────────────────────────
+
+def test_sword_chosen_think_big_excludes_ragnarok():
+    """When sword_chosen=True, Think Big must not include Ragnarok in its all-espers LP."""
+    party = [{"character_id": "celes", "progress": {}}]
+    result_sword = optimize(
+        party,
+        available_esper_ids=[],
+        all_espers=load_espers(),
+        all_spells=load_spells(),
+        think_big=True,
+        sword_chosen=True,
+    )
+    result_normal = optimize(
+        party,
+        available_esper_ids=[],
+        all_espers=load_espers(),
+        all_spells=load_spells(),
+        think_big=True,
+        sword_chosen=False,
+    )
+    # With sword chosen, Ultima is unlearnable (Ragnarok excluded from LP)
+    assert "ultima" in result_sword.unlearnable
+    # Without sword chosen, Ultima is learnable via Ragnarok
+    assert "ultima" not in result_normal.unlearnable
+    # Excluding Ragnarok/Ultima means less total AP needed in Think Big
+    assert result_sword.total_ap_all_espers < result_normal.total_ap_all_espers
+
+
+def test_sword_chosen_ultima_unlearnable():
+    """When sword_chosen=True and Ultima is targeted, it is treated as unlearnable."""
+    party = [{"character_id": "celes", "progress": all_learned_except({"ultima": 0})}]
+    result = optimize(
+        party,
+        available_esper_ids=[],
+        all_espers=load_espers(),
+        all_spells=load_spells(),
+        think_big=True,
+        sword_chosen=True,
+    )
+    assert "ultima" in result.unlearnable
+
+
+def test_sword_not_chosen_ragnarok_included_in_think_big():
+    """When sword_chosen=False (default), Think Big includes Ragnarok normally."""
+    party = [{"character_id": "celes", "progress": all_learned_except({"ultima": 0})}]
+    result = optimize(
+        party,
+        available_esper_ids=[],
+        all_espers=load_espers(),
+        all_spells=load_spells(),
+        think_big=True,
+        sword_chosen=False,
+    )
+    # Ragnarok included, so Ultima is learnable
+    assert "ultima" not in result.unlearnable
+    # Ragnarok appears in LP allocations
+    assert any(a.esper_id == 'ragnarok' for a in result.allocations)

@@ -49,6 +49,7 @@ def run_optimize(req: OptimizeRequest):
         all_spells=spells,
         current_assignments=req.current_assignments,
         think_big=req.think_big,
+        sword_chosen=req.sword_chosen,
     )
 
 
