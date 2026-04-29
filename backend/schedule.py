@@ -37,17 +37,28 @@ def build_schedule(
             return real[0][1]
         return None
 
+    seeds = seed_assignments or {}
+
+    def has_active_seed(char_id: str) -> bool:
+        s = seeds.get(char_id)
+        return bool(s and pending[char_id].get(s, 0) > 0)
+
     phases: list[dict] = []
     MAX_PHASES = 500
 
     while any(pending[c] for c in char_ids) and len(phases) < MAX_PHASES:
         in_use: set[str] = set()
         assignment: dict[str, str | None] = {}
-        for char_id in char_ids:
+        # Seeded characters go first so they claim their esper before unseeded
+        # characters make greedy picks. Python's sort is stable so party order
+        # is preserved within each group.
+        ordered = sorted(char_ids, key=lambda c: (0 if has_active_seed(c) else 1))
+        for char_id in ordered:
             e = pick(char_id, in_use)
             assignment[char_id] = e
             if e is not None:
                 in_use.add(e)
+        assignment = {c: assignment[c] for c in char_ids}
 
         step_candidates: list[int] = [
             pending[char_id][esper_id]
