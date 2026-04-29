@@ -113,7 +113,6 @@ function renderProgressTable(gameData, state, onProgressChange) {
           data-char="${charId}"
           data-spell="${spell.id}"
           value="${Math.round(current)}"
-          ${learned ? 'readonly' : ''}
         />
       </td>
       <td>${learned ? '<span class="learned-badge">Learned</span>' : ''}</td>
